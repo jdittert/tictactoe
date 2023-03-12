@@ -62,8 +62,17 @@ function GameController() {
     };
 
     const getCurrentPlayer = () => currentPlayer;
-    }
+
+    // Print the board after every move
+    const printCurrentRound = () => {
+        board.printBoard();
+        document.getElementById("current-turn").innerText = `The current player is ${currentPlayer.playerName}`;
+    };
+
+    printCurrentRound();
+}
+
     
-const game = GameBoard();
-game.printBoard();
+const game = GameController();
+
 
