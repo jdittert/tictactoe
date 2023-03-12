@@ -44,9 +44,26 @@ function GameBoard() {
 }
 
 
+function GameController() {
+    // Import the board
+    const board = GameBoard();
 
-const playerFactory = (playerName, sign) => ({ playerName, sign });
+    // Set up the two players
+    const playerFactory = (playerName, sign) => ({ playerName, sign });
+    const players = [];
+    players.push(playerFactory("Player One", "X"));
+    players.push(playerFactory("Player Two", "O"));
+    
+    // Set the turn
+    let currentPlayer = players[0];
 
+    const switchPlayer = () => {
+        currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
+    };
+
+    const getCurrentPlayer = () => currentPlayer;
+    }
+    
 const game = GameBoard();
 game.printBoard();
 
