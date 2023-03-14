@@ -42,9 +42,9 @@ function Cell() {
     let value = 0;  
 
     const addMarker = (player) => {
-        value = player;
-        console.log(value);
+        value = player;        
     }
+
     const getValue = () => value;
     
     return {
@@ -84,8 +84,8 @@ function GameController() {
             const {i} = currentSpace.dataset;
             const {j} = currentSpace.dataset;
             board.updateSquare(i, j, getCurrentPlayer().sign);
-            printCurrentRound();
             switchPlayer();
+            printCurrentRound();            
         }
         const spaces = document.querySelectorAll("div.game-box");
         console.log(spaces);
