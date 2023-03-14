@@ -87,8 +87,7 @@ function GameController() {
             switchPlayer();
             printCurrentRound();            
         }
-        const spaces = document.querySelectorAll("div.game-box");
-        console.log(spaces);
+        const spaces = document.querySelectorAll("div.game-box");        
         spaces.forEach(space => space.addEventListener("click", placeMarker));        
     }
 
