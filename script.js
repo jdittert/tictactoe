@@ -14,6 +14,10 @@ function GameBoard() {
 
     const getBoard = () => board;
 
+    const updateSquare = (row, column, player) => {
+        board[row][column].addMarker(player);
+    };
+
     const printBoard = () => {
         const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
         
@@ -31,18 +35,23 @@ function GameBoard() {
         console.log(boardWithCellValues);
       };
     
-      function Cell() {
-        const value = 0;
-    
-        const getValue = () => value;
-        return {
-            getValue
-        };
-    }
-
-    return { getBoard, printBoard };
+    return { getBoard, printBoard, updateSquare };
 }
 
+function Cell() {
+    let value = 0;  
+
+    const addMarker = (player) => {
+        value = player;
+        console.log(value);
+    }
+    const getValue = () => value;
+    
+    return {
+        addMarker,
+        getValue
+    };
+}
 
 function GameController() {
     // Import the board
@@ -66,13 +75,26 @@ function GameController() {
     // Print the board after every move
     const printCurrentRound = () => {
         board.printBoard();
-        document.getElementById("current-turn").innerText = `The current player is ${currentPlayer.playerName}`;
+        document.getElementById("current-turn").innerText = `The current player is ${currentPlayer.playerName}. (${currentPlayer.sign})`;
     };
 
-    printCurrentRound();
-}
+    function playRound() {
+        function placeMarker(event) {
+            const currentSpace = event.target;
+            const {i} = currentSpace.dataset;
+            const {j} = currentSpace.dataset;
+            board.updateSquare(i, j, getCurrentPlayer().sign);
+            printCurrentRound();
+            switchPlayer();
+        }
+        const spaces = document.querySelectorAll("div.game-box");
+        console.log(spaces);
+        spaces.forEach(space => space.addEventListener("click", placeMarker));        
+    }
 
+    playRound();
+
+    return { playRound, getCurrentPlayer };
+}
     
 const game = GameController();
-
-
