@@ -15,7 +15,10 @@ function GameBoard() {
     const getBoard = () => board;
 
     const updateSquare = (row, column, player) => {
-        board[row][column].addMarker(player);
+        const squareValue = board[row][column].getValue();        
+        if (squareValue === 0) {
+            board[row][column].addMarker(player);
+        }        
     };
 
     const printBoard = () => {
