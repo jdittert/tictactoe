@@ -14,11 +14,12 @@ function GameBoard() {
 
     const getBoard = () => board;
 
+    // Need to figure out how to make it not switch turns if square is occupied
     const updateSquare = (row, column, player) => {
         const squareValue = board[row][column].getValue();        
-        if (squareValue === 0) {
-            board[row][column].addMarker(player);
-        }        
+        if (squareValue !== 0) return;
+        
+        board[row][column].addMarker(player);                
     };
 
     const printBoard = () => {
