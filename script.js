@@ -26,20 +26,8 @@ function GameBoard() {
     };
 
     const printBoard = () => {
-        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
-        
-        // Surely there's a way to do this without creating another array
-        const boardForPrinting = [];
-        for (let i = 0; i < rows; i++) {
-            for (let j = 0; j < columns; j++) {
-                boardForPrinting.push(boardWithCellValues[i][j]);
-            }
-        }
-        
-        for (let i = 1; i < 10; i++) {
-            document.getElementById(`game-box-${i}`).innerText = `${boardForPrinting[i - 1]}`;
-        }          
-      };
+        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))                
+      }; 
     
     return { getBoard, printBoard, updateSquare };
 }
@@ -80,41 +68,32 @@ function GameController() {
 
     // Print the board after every move
     const printCurrentRound = () => {
-        board.printBoard();
-        document.getElementById("current-turn").innerText = `The current player is ${currentPlayer.playerName}. (${currentPlayer.sign})`;
+        board.printBoard();        
     };
 
-    function playRound() {
-        function placeMarker(event) {
-            const currentSpace = event.target;
-            const {i} = currentSpace.dataset;
-            const {j} = currentSpace.dataset;
-            const check = board.updateSquare(i, j, getCurrentPlayer().sign);
+    function playRound(row, column) {
+        const check = board.updateSquare(row, column, getCurrentPlayer().sign);
             if (check === true) {
                 switchPlayer();
                 printCurrentRound(); 
-            }                     
-        };        
-        const spaces = document.querySelectorAll("div.game-box");        
-        spaces.forEach(space => space.addEventListener("click", placeMarker));        
+            };                               
     }
-
-    playRound();
 
     return { playRound, getCurrentPlayer, getBoard: board.getBoard };
 }
 
 function displayController() {
     const game = GameController();      
-    const buttonBoard = document.getElementById("button-board");
-    function updateText(event) {
-        const currentButton = event.target;
-        currentButton.textContent = "Change!";
-    }
+    const buttonBoard = document.getElementById("button-board");    
 
     function updateBoard() {
         buttonBoard.innerHTML = "";
         const board = game.getBoard();
+        const currentPlayer = game.getCurrentPlayer();
+        const turnDiv = document.getElementById("current-turn");
+
+        turnDiv.textContent = `The current player is ${currentPlayer.playerName}. (${currentPlayer.sign})`
+
         board.forEach((row, index) => {
             const rowData = index;
             row.forEach((cell, column) => {
@@ -125,14 +104,24 @@ function displayController() {
                 cellButton.textContent = cell.getValue();
                 buttonBoard.appendChild(cellButton);
             })
-        })
-        
+        })        
     }
+
+    function boardListener(event) {
+        const selectedRow = event.target.dataset.row;
+        const selectedColumn = event.target.dataset.column;        
+        if (!selectedColumn) return;
+        if (!selectedRow) return;
+        game.playRound(selectedRow, selectedColumn);
+        updateBoard();
+    }
+
+    buttonBoard.addEventListener("click", boardListener);
 
     updateBoard();
 
     return { updateBoard }
 }
-    
-const game = GameController();
+
+
 const newGame = displayController();

@@ -36,3 +36,10 @@ button {
     height: 200px;
     border: 2px solid black;
 }
+
+.button-board {
+    display: grid;
+    width: 600px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
