@@ -15,11 +15,14 @@ function GameBoard() {
     const getBoard = () => board;
 
     // Need to figure out how to make it not switch turns if square is occupied
+    // eslint-disable-next-line consistent-return
     const updateSquare = (row, column, player) => {
         const squareValue = board[row][column].getValue();        
-        if (squareValue !== 0) return;
-        
-        board[row][column].addMarker(player);                
+        if (squareValue !== 0) {
+            return false;
+        };
+        board[row][column].addMarker(player);
+        return true;                   
     };
 
     const printBoard = () => {
@@ -87,10 +90,12 @@ function GameController() {
             const currentSpace = event.target;
             const {i} = currentSpace.dataset;
             const {j} = currentSpace.dataset;
-            board.updateSquare(i, j, getCurrentPlayer().sign);
-            switchPlayer();
-            printCurrentRound();            
-        }
+            const check = board.updateSquare(i, j, getCurrentPlayer().sign);
+            if (check === true) {
+                switchPlayer();
+                printCurrentRound(); 
+            }                     
+        };        
         const spaces = document.querySelectorAll("div.game-box");        
         spaces.forEach(space => space.addEventListener("click", placeMarker));        
     }
