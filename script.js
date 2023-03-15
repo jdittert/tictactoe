@@ -38,7 +38,7 @@ function GameBoard() {
         
         for (let i = 1; i < 10; i++) {
             document.getElementById(`game-box-${i}`).innerText = `${boardForPrinting[i - 1]}`;
-        }        
+        }          
       };
     
     return { getBoard, printBoard, updateSquare };
@@ -101,31 +101,32 @@ function GameController() {
 
     playRound();
 
-    return { playRound, getCurrentPlayer };
+    return { playRound, getCurrentPlayer, getBoard: board.getBoard };
 }
 
 function displayController() {
-    const boardImport = GameBoard();
-    const boardValues = boardImport.getBoard();
-    console.log(boardValues);
-    const board = document.getElementById("button-board");
+    const game = GameController();      
+    const buttonBoard = document.getElementById("button-board");
     function updateText(event) {
         const currentButton = event.target;
         currentButton.textContent = "Change!";
     }
 
     function updateBoard() {
-        board.innerHTML = "";
-        for (i = 0; i < boardValues.length; i++) {
-            const buttonRow = document.createElement("div");
-            board.appendChild(buttonRow).className = `button-row-${i}`;
-            for (j = 0; j < 3; j++) {
-                const btn = document.createElement("button");
-                btn.innerText = `${i} of ${j}`;
-                btn.addEventListener("click", updateText);
-                buttonRow.appendChild(btn).className = `button-${j}`;
-            }
-        }
+        buttonBoard.innerHTML = "";
+        const board = game.getBoard();
+        board.forEach((row, index) => {
+            const rowData = index;
+            row.forEach((cell, column) => {
+                const cellButton = document.createElement("button");
+                cellButton.classList.add("cell");
+                cellButton.dataset.column = column;
+                cellButton.dataset.row = rowData;
+                cellButton.textContent = cell.getValue();
+                buttonBoard.appendChild(cellButton);
+            })
+        })
+        
     }
 
     updateBoard();
