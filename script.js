@@ -118,10 +118,8 @@ function displayController() {
 
     buttonBoard.addEventListener("click", boardListener);
 
-    updateBoard();
-
-    return { updateBoard }
+    updateBoard();    
 }
 
 
-const newGame = displayController();
+displayController();
