@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 
 function GameBoard() {
@@ -14,7 +15,6 @@ function GameBoard() {
 
     const getBoard = () => board;
 
-    // Need to figure out how to make it not switch turns if square is occupied
     // eslint-disable-next-line consistent-return
     const updateSquare = (row, column, player) => {
         const squareValue = board[row][column].getValue();        
@@ -38,8 +38,7 @@ function GameBoard() {
         
         for (let i = 1; i < 10; i++) {
             document.getElementById(`game-box-${i}`).innerText = `${boardForPrinting[i - 1]}`;
-        }
-        console.log(boardWithCellValues);
+        }        
       };
     
     return { getBoard, printBoard, updateSquare };
@@ -104,5 +103,35 @@ function GameController() {
 
     return { playRound, getCurrentPlayer };
 }
+
+function displayController() {
+    const boardImport = GameBoard();
+    const boardValues = boardImport.getBoard();
+    console.log(boardValues);
+    const board = document.getElementById("button-board");
+    function updateText(event) {
+        const currentButton = event.target;
+        currentButton.textContent = "Change!";
+    }
+
+    function updateBoard() {
+        board.innerHTML = "";
+        for (i = 0; i < boardValues.length; i++) {
+            const buttonRow = document.createElement("div");
+            board.appendChild(buttonRow).className = `button-row-${i}`;
+            for (j = 0; j < 3; j++) {
+                const btn = document.createElement("button");
+                btn.innerText = `${i} of ${j}`;
+                btn.addEventListener("click", updateText);
+                buttonRow.appendChild(btn).className = `button-${j}`;
+            }
+        }
+    }
+
+    updateBoard();
+
+    return { updateBoard }
+}
     
 const game = GameController();
+const newGame = displayController();
