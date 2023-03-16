@@ -1,3 +1,6 @@
+/* Used the example given in the assignment as a starting point for this code.
+https://replit.com/@40percentzinc/ConnectFourWithDOMSkeleton#script.js */
+
 /* eslint-disable no-use-before-define */
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 
@@ -71,10 +74,31 @@ function GameController() {
         board.printBoard();        
     };
 
+    // Check for a winner
+    function checkWinner() {
+        const checkBoard = board.getBoard();
+        let wins = 0;     
+        // Check rows
+        checkBoard.forEach((row) => {
+        const rowCheck = [];
+        row.forEach((cell) => { rowCheck.push(cell.getValue()); });
+        const rowFilter = rowCheck.filter(sign => sign === getCurrentPlayer().sign);           
+        if (rowFilter.length === 3) {
+            wins += 1;
+            }                                             
+        })
+        return wins; 
+    }   
+
     // Put a marker on the square if it is not occupied
     function playRound(row, column) {
         const check = board.updateSquare(row, column, getCurrentPlayer().sign);
             if (check === true) {
+                const winner = checkWinner();
+                if (winner === 1) {
+                    document.getElementById("winner").textContent = "We have a winner!"
+                    return;
+                }               
                 switchPlayer();
                 printCurrentRound(); 
             };                               
