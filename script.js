@@ -71,6 +71,7 @@ function GameController() {
         board.printBoard();        
     };
 
+    // Put a marker on the square if it is not occupied
     function playRound(row, column) {
         const check = board.updateSquare(row, column, getCurrentPlayer().sign);
             if (check === true) {
@@ -101,7 +102,10 @@ function displayController() {
                 cellButton.classList.add("cell");
                 cellButton.dataset.column = column;
                 cellButton.dataset.row = rowData;
-                cellButton.textContent = cell.getValue();
+                if (cell.getValue() !== 0) {
+                    cellButton.textContent = cell.getValue();
+                    cellButton.classList.add("occupied");
+                }
                 buttonBoard.appendChild(cellButton);
             })
         })        

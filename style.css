@@ -6,6 +6,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    box-sizing: border-box;
 }
 
 header, footer {
@@ -14,27 +15,12 @@ header, footer {
     justify-content: center;
 }
 
-.game-board {
-    flex: 1;
-}
-
-.game-row {
-    display: flex;
-}
-
-.game-box {
-    border: 1px solid black;
-    width: 200px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-button {
+.cell {
     width: 200px;
     height: 200px;
     border: 2px solid black;
+    font-size: 96px;
+    color: darkgreen;
 }
 
 .button-board {
@@ -42,4 +28,22 @@ button {
     width: 600px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+}
+
+button {
+    background-color: antiquewhite;
+}
+
+button:hover {
+    background-color: aquamarine;
+}
+
+.cell:active {
+    transform: scale(0.95);
+    box-shadow: 3px 2px 22px 1px black;
+}
+
+.occupied:active {
+    box-shadow: 0px 0px 0px 5px red;
+    background-color: lightcoral;
 }
