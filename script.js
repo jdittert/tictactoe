@@ -29,7 +29,8 @@ function GameBoard() {
     };
 
     const printBoard = () => {
-        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))                
+        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()));
+        return boardWithCellValues;          
       }; 
     
     return { getBoard, printBoard, updateSquare };
@@ -70,31 +71,59 @@ function GameController() {
     const getCurrentPlayer = () => currentPlayer;
 
     // Print the board after every move
-    const printCurrentRound = () => {
+   const printCurrentRound = () => {
         board.printBoard();        
-    };
+    }; 
 
     // Check for a winner
-    function checkWinner() {
-        const checkBoard = board.getBoard();
+    function checkWinner() {    
+        const newBoard = board.printBoard();                      
         let wins = 0;     
         // Check rows
-        checkBoard.forEach((row) => {
+        newBoard.forEach((row) => {
         const rowCheck = [];
-        row.forEach((cell) => { rowCheck.push(cell.getValue()); });
+        row.forEach((cell) => { rowCheck.push(cell); });
         const rowFilter = rowCheck.filter(sign => sign === getCurrentPlayer().sign);           
         if (rowFilter.length === 3) {
             wins += 1;
             }                                             
         })
+        // Check columns
+        for (let i = 0; i < newBoard.length; i++) {
+            const colCheck = [];
+            for (let j = 0; j < newBoard[i].length; j++) {
+                colCheck.push(newBoard[j][i]);
+            }
+            const colFilter = colCheck.filter(sign => sign === getCurrentPlayer().sign);
+            if (colFilter.length === 3) {
+                wins += 1;
+            }
+        }
+        // Check diagonals
+        const negSlope = [];
+        for (let i = 0; i < newBoard.length; i++) {            
+            negSlope.push(newBoard[i][i]);
+        }
+        const negSlopeFilter = negSlope.filter(sign => sign === getCurrentPlayer().sign);        
+        if (negSlopeFilter.length === 3) {
+            wins += 1;
+        }        
+        const posSlope = [];  
+        for (let i = 0; i < newBoard.length; i++) {            
+                posSlope.push(newBoard[i][(newBoard.length - 1) - i]);
+        }       
+        const posSlopeFilter = posSlope.filter(sign => sign === getCurrentPlayer().sign);        
+        if (posSlopeFilter.length === 3) {
+            wins += 1;
+        }
         return wins; 
     }   
 
-    // Put a marker on the square if it is not occupied
+    // Put a marker on the square if it is not occupied, then check for winner
     function playRound(row, column) {
         const check = board.updateSquare(row, column, getCurrentPlayer().sign);
             if (check === true) {
-                const winner = checkWinner();
+                const winner = checkWinner();                
                 if (winner === 1) {
                     document.getElementById("winner").textContent = "We have a winner!"
                     return;
