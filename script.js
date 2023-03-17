@@ -116,18 +116,33 @@ function GameController() {
         if (posSlopeFilter.length === 3) {
             wins += 1;
         }
-        return wins; 
+        // Check for ties
+        let emptySpace = true;
+        const emptyCheck = [];
+        newBoard.forEach((row) => {
+            row.forEach((cell) => {
+                if (cell === 0) emptyCheck.push(cell);
+            })             
+        })
+        if (emptyCheck.length === 0) {
+            emptySpace = false;
+        }
+        
+        return { wins, emptySpace }; 
     }   
 
     // Put a marker on the square if it is not occupied, then check for winner
     function playRound(row, column) {
         const check = board.updateSquare(row, column, getCurrentPlayer().sign);
             if (check === true) {
-                const winner = checkWinner();                
+                const winner = checkWinner().wins;                
                 if (winner === 1) {
                     document.getElementById("winner").textContent = "We have a winner!"
                     return;
-                }               
+                }
+                if (!checkWinner().emptySpace) {
+                    document.getElementById("winner").textContent = "We have a tie!"
+                }            
                 switchPlayer();
                 printCurrentRound(); 
             };                               
