@@ -1,18 +1,31 @@
 body {
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
+    padding: 0;    
+    box-sizing: border-box;
+    font-family: "Valera Round", sans-serif;
+}
+
+.body-wrapper {
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    box-sizing: border-box;
 }
 
 header, footer {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+header {
+    font-size: 4rem;
+}
+
+#current-turn {
+    font-size: 1.5rem;
+    margin-bottom: .25rem;
 }
 
 .cell {
@@ -31,7 +44,9 @@ header, footer {
 }
 
 button {
-    background-color: antiquewhite;
+    background-color: antiquewhite;    
+    font-family: inherit;
+    font-size: 1em;
 }
 
 button:hover {
