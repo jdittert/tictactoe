@@ -53,7 +53,7 @@ function Cell() {
 
 function GameController() {
     // Import the board
-    const board = GameBoard();
+    const board = GameBoard();    
 
     // Set up the two players
     const playerFactory = (playerName, sign) => ({ playerName, sign });
@@ -138,11 +138,12 @@ function GameController() {
             if (check === true) {
                 const winner = checkWinner().wins;                
                 if (winner === 1) {
-                    document.getElementById("winner").textContent = "We have a winner!"
+                    document.getElementById("winner").textContent = "We have a winner!"              
                     return;
                 }
                 if (!checkWinner().emptySpace) {
                     document.getElementById("winner").textContent = "We have a tie!"
+                    return;
                 }            
                 switchPlayer();
                 printCurrentRound(); 
@@ -160,7 +161,7 @@ function GameController() {
     return { playRound, getCurrentPlayer, getBoard: board.getBoard, resetBoard };
 }
 
-function displayController() {
+function DisplayController() {
     const game = GameController();      
     const buttonBoard = document.getElementById("button-board");    
     const board = game.getBoard();    
@@ -204,8 +205,8 @@ function displayController() {
     buttonBoard.addEventListener("click", boardListener);
     document.getElementById("reset-board").addEventListener("click", resetGame);
 
-    updateBoard();    
+    updateBoard();
+    
 }
 
-
-displayController();
+DisplayController();
