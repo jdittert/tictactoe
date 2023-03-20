@@ -128,6 +128,7 @@ function GameController() {
             emptySpace = false;
         }
         
+        // Note: this is only the return for the checkWinner function
         return { wins, emptySpace }; 
     }   
 
@@ -148,19 +149,26 @@ function GameController() {
             };                               
     }
 
-    return { playRound, getCurrentPlayer, getBoard: board.getBoard };
+    // Reset the board
+    function resetBoard() {
+        document.getElementById("winner").textContent = "";
+        if (currentPlayer === players[1]) switchPlayer();
+        const boardToReset = board.getBoard();
+        const clearCells = boardToReset.map((row) => row.map((cell) => cell.addMarker(0)));        
+    }
+
+    return { playRound, getCurrentPlayer, getBoard: board.getBoard, resetBoard };
 }
 
 function displayController() {
     const game = GameController();      
     const buttonBoard = document.getElementById("button-board");    
+    const board = game.getBoard();    
 
     function updateBoard() {
         buttonBoard.innerHTML = "";
-        const board = game.getBoard();
-        const currentPlayer = game.getCurrentPlayer();
+        const currentPlayer = game.getCurrentPlayer();  
         const turnDiv = document.getElementById("current-turn");
-
         turnDiv.textContent = `The current player is ${currentPlayer.playerName}. (${currentPlayer.sign})`
 
         board.forEach((row, index) => {
@@ -188,7 +196,13 @@ function displayController() {
         updateBoard();
     }
 
+    function resetGame () {
+        game.resetBoard();
+        updateBoard();
+    }
+
     buttonBoard.addEventListener("click", boardListener);
+    document.getElementById("reset-board").addEventListener("click", resetGame);
 
     updateBoard();    
 }
