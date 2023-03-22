@@ -138,16 +138,17 @@ function GameController() {
             if (check === true) {
                 const winner = checkWinner().wins;                
                 if (winner === 1) {
-                    document.getElementById("winner").textContent = "We have a winner!"              
-                    return;
-                }
+                    document.getElementById("winner").textContent = "We have a winner!"
+                    return false;                  
+                } 
                 if (!checkWinner().emptySpace) {
                     document.getElementById("winner").textContent = "We have a tie!"
-                    return;
+                    return false;
                 }            
                 switchPlayer();
                 printCurrentRound(); 
-            };                               
+                return true;                
+            };                             
     }
 
     // Reset the board
@@ -193,12 +194,14 @@ function DisplayController() {
         const selectedColumn = event.target.dataset.column;        
         if (!selectedColumn) return;
         if (!selectedRow) return;
-        game.playRound(selectedRow, selectedColumn);
-        updateBoard();
+        const status = game.playRound(selectedRow, selectedColumn);
+        updateBoard();      
+        if (!status) buttonBoard.removeEventListener("click", boardListener);
     }
 
     function resetGame () {
         game.resetBoard();
+        buttonBoard.addEventListener("click", boardListener);
         updateBoard();
     }
 
