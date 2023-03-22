@@ -178,6 +178,7 @@ function DisplayController() {
             row.forEach((cell, column) => {
                 const cellButton = document.createElement("button");
                 cellButton.classList.add("cell");
+                cellButton.classList.add("square");
                 cellButton.dataset.column = column;
                 cellButton.dataset.row = rowData;
                 if (cell.getValue() !== 0) {
@@ -196,7 +197,11 @@ function DisplayController() {
         if (!selectedRow) return;
         const status = game.playRound(selectedRow, selectedColumn);
         updateBoard();      
-        if (!status) buttonBoard.removeEventListener("click", boardListener);
+        if (!status) {
+            buttonBoard.removeEventListener("click", boardListener);
+            const gameSquares = document.getElementsByClassName("cell");            
+            Array.from(gameSquares).forEach(square => square.classList.remove("square", "occupied"));
+            };
     }
 
     function resetGame () {
