@@ -1,8 +1,16 @@
+:root {
+    --light-background: lightgray;
+    --white: white;
+    --purple-accent: blueviolet;
+    --blue-accent: lightblue;
+}
+
 body {
     margin: 0;
     padding: 0;    
     box-sizing: border-box;
     font-family: "Valera Round", sans-serif;
+    background-color: var(--light-background);
 }
 
 .body-wrapper {
@@ -23,12 +31,43 @@ header {
     font-size: 4rem;
 }
 
+.main-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.player-names {
+    display: grid;
+    height: 100%;
+    grid-template-rows: auto;
+    align-content: space-between;
+    justify-content: end;    
+    padding-right: 3rem;
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    font-size: 2rem;
+    padding: 8px;
+}
+
+.edit {
+    background-color: var(--purple-accent);
+    color: white;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
 #current-turn {
     font-size: 1.5rem;
     margin-bottom: .25rem;
 }
 
 .cell {
+    background-color: var(--white);
     width: 200px;
     height: 200px;
     border: 2px solid black;
@@ -43,14 +82,13 @@ header {
     grid-template-rows: repeat(3, 1fr);
 }
 
-button {
-    background-color: antiquewhite;    
+button {        
     font-family: inherit;
     font-size: 1em;
 }
 
 .square:hover {
-    background-color: aquamarine;
+    background-color: var(--blue-accent);
 }
 
 .sqaure:active {
