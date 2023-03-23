@@ -213,6 +213,16 @@ function DisplayController() {
     buttonBoard.addEventListener("click", boardListener);
     document.getElementById("reset-board").addEventListener("click", resetGame);
 
+    // Listener for edit buttons
+    function editListener(event) {
+        const selectedPlayer = event.target.dataset.player;
+        if (!selectedPlayer) return;
+        const editDiv = document.getElementById(`player-${selectedPlayer}-form`);
+        editDiv.style.display = "block";
+    }
+    const editButtons = document.getElementsByClassName("edit");
+    Array.from(editButtons).forEach(button => button.addEventListener("click", editListener));
+
     updateBoard();
     
 }

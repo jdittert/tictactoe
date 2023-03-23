@@ -20,14 +20,28 @@
                 <div class="player-names">
                     <div class="player">
                         <div>Player One</div>
-                        <div><button class="edit" data-player="one">Edit name</button></div>
+                        <div><button class="edit" data-player="one">Edit</button></div>
+                        <div class="name-input" id="player-one-form">                            
+                            <form id="custom-name-one">
+                                <label for="player-one-name">Name</label>
+                                <input type="text" name="player-one-name" id="player-one-name">
+                                <button type="submit">Update</button>
+                            </form>                            
+                        </div>                        
                     </div>
                     <div id="reset-board"><button>Reset Board</button></div>
                     <div id="current-turn"></div>
                     <div id="winner"></div>
                     <div class="player">
                         <div>Player Two</div>
-                        <div><button class="edit" data-player="two">Edit name</button></div>
+                        <div><button class="edit" data-player="two">Edit</button></div>
+                        <div class="name-input" id="player-two-form">
+                            <form id="custom-name-two">
+                                <label for="player-two-name">Name</label>
+                                <input type="text" name="player-two-name" id="player-two-name">
+                                <button type="submit">Update</button>
+                            </form>                            
+                        </div>
                     </div>
                 </div>
                 <div class="button-board" id="button-board"></div>  

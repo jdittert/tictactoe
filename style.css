@@ -53,10 +53,14 @@ header {
     padding: 8px;
 }
 
+.name-input {
+    display: none;
+}
+
 .edit {
     background-color: var(--purple-accent);
     color: white;
-    font-size: 1rem;
+    font-size: .75rem;
     padding: 8px 16px;
     border-radius: 8px;
 }
