@@ -60,6 +60,17 @@ function GameController() {
     const players = [];
     players.push(playerFactory("Player One", "X"));
     players.push(playerFactory("Player Two", "O"));
+
+    // Allow players to change their name - need to change click to submit?
+    function updateName() {
+        const updates = document.getElementsByClassName("update");
+        Array.from(updates).forEach(update => update.addEventListener("click", renamePlayer))
+        function renamePlayer(event) {
+            const playerIndex = event.target.dataset.index;
+            console.log(playerIndex);
+            event.preventDefault();
+        }        
+    }    
     
     // Set the turn
     let currentPlayer = players[0];
@@ -159,13 +170,14 @@ function GameController() {
         const clearCells = boardToReset.map((row) => row.map((cell) => cell.addMarker(0)));        
     }
 
-    return { playRound, getCurrentPlayer, getBoard: board.getBoard, resetBoard };
+    return { playRound, getCurrentPlayer, getBoard: board.getBoard, resetBoard, updateName };
 }
 
 function DisplayController() {
     const game = GameController();      
     const buttonBoard = document.getElementById("button-board");    
-    const board = game.getBoard();    
+    const board = game.getBoard();
+    const rename = game.updateName(); 
 
     function updateBoard() {
         buttonBoard.innerHTML = "";
