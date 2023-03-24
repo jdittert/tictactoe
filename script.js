@@ -62,15 +62,28 @@ function GameController() {
     players.push(playerFactory("Player Two", "O"));
 
     // Allow players to change their name - need to change click to submit?
-    function updateName() {
-        const updates = document.getElementsByClassName("update");
-        Array.from(updates).forEach(update => update.addEventListener("click", renamePlayer))
+    const forms = document.getElementsByTagName("form");    
+    function updateName() {        
+        Array.from(forms).forEach(form => form.addEventListener("submit", renamePlayer));
         function renamePlayer(event) {
             const playerIndex = event.target.dataset.index;
-            console.log(playerIndex);
+            const nameForm = event.target;            
+            const formData = new FormData(nameForm);
+            const formName = formData.get("player-name");
+            players[playerIndex].playerName = formName;            
+            nameForm.reset();
+            nameForm.parentNode.style.display = "none";
+            displayNames();     
             event.preventDefault();
         }        
-    }    
+    }
+    
+    function displayNames() {
+        document.getElementById("player-one").textContent = `${players[0].playerName} (${players[0].sign})`;
+        document.getElementById("player-two").textContent = `${players[1].playerName} (${players[1].sign})`;
+        const turnDiv = document.getElementById("current-turn");
+        turnDiv.textContent = `${currentPlayer.playerName}'s turn. (${currentPlayer.sign})`
+    }
     
     // Set the turn
     let currentPlayer = players[0];
@@ -170,13 +183,14 @@ function GameController() {
         const clearCells = boardToReset.map((row) => row.map((cell) => cell.addMarker(0)));        
     }
 
-    return { playRound, getCurrentPlayer, getBoard: board.getBoard, resetBoard, updateName };
+    return { playRound, getCurrentPlayer, getBoard: board.getBoard, resetBoard, updateName, displayNames };
 }
 
 function DisplayController() {
     const game = GameController();      
     const buttonBoard = document.getElementById("button-board");    
     const board = game.getBoard();
+    const names = game.displayNames();
     const rename = game.updateName(); 
 
     function updateBoard() {
@@ -233,8 +247,8 @@ function DisplayController() {
         editDiv.style.display = "block";
     }
     const editButtons = document.getElementsByClassName("edit");
-    Array.from(editButtons).forEach(button => button.addEventListener("click", editListener));
-
+    Array.from(editButtons).forEach(button => button.addEventListener("click", editListener));   
+    
     updateBoard();
     
 }

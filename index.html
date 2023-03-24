@@ -19,13 +19,13 @@
             <div class="main-wrapper">
                 <div class="player-names">
                     <div class="player">
-                        <div id="player-one">Player One (X)</div>
+                        <div id="player-one"></div>
                         <div><button class="edit" data-player="one">Edit</button></div>
                         <div class="name-input" id="player-one-form">                            
-                            <form id="custom-name-one">
+                            <form id="custom-name-one" data-index="0">
                                 <div>
                                     <label for="player-one-name" hidden>Name</label>
-                                    <input type="text" name="player-one-name" id="player-one-name" placeholder="Player Name">
+                                    <input type="text" name="player-name" id="player-one-name" placeholder="Player Name">
                                 </div>
                                 <div><button type="submit" class="update" id="submit-one" data-index="0">Update</button></div>
                             </form>                            
@@ -37,13 +37,13 @@
                         <div id="winner"></div>
                     </div>
                     <div class="player">
-                        <div id="player-two">Player Two (O)</div>
+                        <div id="player-two" data-index="1"></div>
                         <div><button class="edit" data-player="two">Edit</button></div>
                         <div class="name-input" id="player-two-form">
-                            <form id="custom-name-two">
+                            <form id="custom-name-two" data-index="1">
                                 <div>
                                     <label for="player-two-name" hidden>Name</label>
-                                    <input type="text" name="player-two-name" id="player-two-name" placeholder="Player Name">
+                                    <input type="text" name="player-name" id="player-two-name" placeholder="Player Name">
                                 </div>
                                 <div><button type="submit" class="update" id="submit-two" data-index="1">Update</button></div>
                             </form>                            
