@@ -61,7 +61,7 @@ function GameController() {
     players.push(playerFactory("Player One", "X"));
     players.push(playerFactory("Player Two", "O"));
 
-    // Allow players to change their name - need to change click to submit?
+    // Allow players to change their name
     const forms = document.getElementsByTagName("form");    
     function updateName() {        
         Array.from(forms).forEach(form => form.addEventListener("submit", renamePlayer));
@@ -214,6 +214,7 @@ function DisplayController() {
         })        
     }
 
+    // Listen for player clicks
     function boardListener(event) {
         const selectedRow = event.target.dataset.row;
         const selectedColumn = event.target.dataset.column;        
@@ -221,11 +222,13 @@ function DisplayController() {
         if (!selectedRow) return;
         const status = game.playRound(selectedRow, selectedColumn);
         updateBoard();      
+        // If game is over (playRound is not true)
         if (!status) {
             buttonBoard.removeEventListener("click", boardListener);
             const gameSquares = document.getElementsByClassName("cell");            
             Array.from(gameSquares).forEach(square => square.classList.remove("square", "occupied"));
             const currentPlayer = game.getCurrentPlayer();
+            // False is a win, null is a tie
             if (status === false) {
                 turnDiv.textContent = `${currentPlayer.playerName} Wins!`
             } else if (status === null) {
@@ -234,6 +237,7 @@ function DisplayController() {
         };
     }
 
+    // Reset the board
     function resetGame () {
         game.resetBoard();
         buttonBoard.addEventListener("click", boardListener);
