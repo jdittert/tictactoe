@@ -14,9 +14,14 @@
 <body>
 
     <div class="body-wrapper">
-        <header>Tic Tac Toe</header>
+        <header>
+            <div>Tic Tac Toe</div>
+        </header>
         <main>
             <div class="main-wrapper">
+                <div class="game-info">
+                    <div id="current-turn"></div>                                      
+                </div>
                 <div class="player-names">
                     <div class="player">
                         <div id="player-one"></div>
@@ -31,10 +36,8 @@
                             </form>                            
                         </div>                        
                     </div>
-                    <div class="game-info">
-                        <div id="reset-board"><button class="reset">Reset Board</button></div>
-                        <div id="current-turn"></div>
-                        <div id="winner"></div>
+                    <div class="reset-button">
+                        <div id="reset-board"><button class="reset">Reset Board</button></div>                        
                     </div>
                     <div class="player">
                         <div id="player-two" data-index="1"></div>

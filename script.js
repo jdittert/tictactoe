@@ -161,23 +161,21 @@ function GameController() {
         const check = board.updateSquare(row, column, getCurrentPlayer().sign);
             if (check === true) {
                 const winner = checkWinner().wins;                
-                if (winner === 1) {
-                    document.getElementById("winner").textContent = "We have a winner!"
+                if (winner === 1) {                   
                     return false;                  
                 } 
-                if (!checkWinner().emptySpace) {
-                    document.getElementById("winner").textContent = "We have a tie!"
-                    return false;
+                if (!checkWinner().emptySpace) {                    
+                    return null;
                 }            
                 switchPlayer();
                 printCurrentRound(); 
                 return true;                
-            };                             
+            };
+            return true;                         
     }
 
     // Reset the board
-    function resetBoard() {
-        document.getElementById("winner").textContent = "";
+    function resetBoard() {        
         if (currentPlayer === players[1]) switchPlayer();
         const boardToReset = board.getBoard();
         const clearCells = boardToReset.map((row) => row.map((cell) => cell.addMarker(0)));        
@@ -191,12 +189,12 @@ function DisplayController() {
     const buttonBoard = document.getElementById("button-board");    
     const board = game.getBoard();
     const names = game.displayNames();
-    const rename = game.updateName(); 
+    const rename = game.updateName();
+    const turnDiv = document.getElementById("current-turn");
 
     function updateBoard() {
         buttonBoard.innerHTML = "";
-        const currentPlayer = game.getCurrentPlayer();  
-        const turnDiv = document.getElementById("current-turn");
+        const currentPlayer = game.getCurrentPlayer();        
         turnDiv.textContent = `${currentPlayer.playerName}'s turn. (${currentPlayer.sign})`
 
         board.forEach((row, index) => {
@@ -227,7 +225,13 @@ function DisplayController() {
             buttonBoard.removeEventListener("click", boardListener);
             const gameSquares = document.getElementsByClassName("cell");            
             Array.from(gameSquares).forEach(square => square.classList.remove("square", "occupied"));
+            const currentPlayer = game.getCurrentPlayer();
+            if (status === false) {
+                turnDiv.textContent = `${currentPlayer.playerName} Wins!`
+            } else if (status === null) {
+                turnDiv.textContent = "We have a tie!"
             };
+        };
     }
 
     function resetGame () {
