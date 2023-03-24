@@ -171,7 +171,7 @@ function DisplayController() {
         buttonBoard.innerHTML = "";
         const currentPlayer = game.getCurrentPlayer();  
         const turnDiv = document.getElementById("current-turn");
-        turnDiv.textContent = `The current player is ${currentPlayer.playerName}. (${currentPlayer.sign})`
+        turnDiv.textContent = `${currentPlayer.playerName}'s turn. (${currentPlayer.sign})`
 
         board.forEach((row, index) => {
             const rowData = index;

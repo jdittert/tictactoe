@@ -39,7 +39,7 @@ header {
 .player-names {
     display: grid;
     height: 100%;
-    grid-template-rows: auto;
+    grid-template-rows: repeat(3, 1fr);
     align-content: space-between;
     justify-content: end;    
     padding-right: 3rem;
@@ -57,12 +57,29 @@ header {
     display: none;
 }
 
-.edit {
+.edit, .update,
+.reset {
     background-color: var(--purple-accent);
     color: white;
     font-size: .75rem;
     padding: 8px 16px;
     border-radius: 8px;
+}
+
+input {
+    height: 1.5rem;
+}
+
+form {
+    text-align: right;
+}
+
+.game-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+    text-align: right;
 }
 
 #current-turn {

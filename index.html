@@ -19,27 +19,33 @@
             <div class="main-wrapper">
                 <div class="player-names">
                     <div class="player">
-                        <div>Player One</div>
+                        <div id="player-one">Player One (X)</div>
                         <div><button class="edit" data-player="one">Edit</button></div>
                         <div class="name-input" id="player-one-form">                            
                             <form id="custom-name-one">
-                                <label for="player-one-name">Name</label>
-                                <input type="text" name="player-one-name" id="player-one-name">
-                                <button type="submit">Update</button>
+                                <div>
+                                    <label for="player-one-name" hidden>Name</label>
+                                    <input type="text" name="player-one-name" id="player-one-name" placeholder="Player Name">
+                                </div>
+                                <div><button type="submit" class="update">Update</button></div>
                             </form>                            
                         </div>                        
                     </div>
-                    <div id="reset-board"><button>Reset Board</button></div>
-                    <div id="current-turn"></div>
-                    <div id="winner"></div>
+                    <div class="game-info">
+                        <div id="reset-board"><button class="reset">Reset Board</button></div>
+                        <div id="current-turn"></div>
+                        <div id="winner"></div>
+                    </div>
                     <div class="player">
-                        <div>Player Two</div>
+                        <div id="player-two">Player Two (O)</div>
                         <div><button class="edit" data-player="two">Edit</button></div>
                         <div class="name-input" id="player-two-form">
                             <form id="custom-name-two">
-                                <label for="player-two-name">Name</label>
-                                <input type="text" name="player-two-name" id="player-two-name">
-                                <button type="submit">Update</button>
+                                <div>
+                                    <label for="player-two-name" hidden>Name</label>
+                                    <input type="text" name="player-two-name" id="player-two-name" placeholder="Player Name">
+                                </div>
+                                <div><button type="submit" class="update">Update</button></div>
                             </form>                            
                         </div>
                     </div>
